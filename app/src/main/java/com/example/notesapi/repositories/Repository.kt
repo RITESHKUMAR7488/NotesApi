@@ -4,6 +4,7 @@ package com.example.notesapi.repositories
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.notesapi.apiInterface.NotesApiInterface
+import com.example.notesapi.models.ApiResponseNotesModel
 import com.example.notesapi.models.ApiResponseSignupModel
 import com.example.notesapi.models.User
 import retrofit2.Call
@@ -51,6 +52,21 @@ class Repository(private val api: NotesApiInterface) {
             override fun onFailure(call: Call<ApiResponseSignupModel>, t: Throwable) {
                 // Log the error message
                 Log.d("Error", t.message.toString())
+            }
+        })
+    }
+
+    fun getNotes(data: MutableLiveData<ApiResponseNotesModel>){
+        api.getNotes().enqueue(object : Callback<ApiResponseNotesModel?> {
+            override fun onResponse(
+                p0: Call<ApiResponseNotesModel?>,
+                p1: Response<ApiResponseNotesModel?>
+            ) {
+                data.value=p1.body()
+            }
+
+            override fun onFailure(p0: Call<ApiResponseNotesModel?>, p1: Throwable) {
+                Log.d("Errorss", p1.message.toString())
             }
         })
     }
