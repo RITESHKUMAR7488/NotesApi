@@ -14,56 +14,58 @@ import com.example.notesapi.MainActivity
 import com.example.notesapi.MyApplication
 import com.example.notesapi.R
 import com.example.notesapi.apiInterface.NotesApiInterface
-import com.example.notesapi.databinding.ActivitySignInBinding
-import com.example.notesapi.models.User
+import com.example.notesapi.databinding.ActivityCreateNotesBinding
+import com.example.notesapi.models.ApiResponseNotesCreateModel
+import com.example.notesapi.models.NotesModel
 import com.example.notesapi.repositories.Repository
 import com.example.notesapi.viewModelFactory.MyViewModelFactory
 import com.example.notesapi.viewModels.MyViewModel
 
-class SignIn : AppCompatActivity() {
-    private lateinit var binding: ActivitySignInBinding
+class CreateNotes : AppCompatActivity() {
     private lateinit var viewModel: MyViewModel
+    private lateinit var binding: ActivityCreateNotesBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding= DataBindingUtil.setContentView(this,R.layout.activity_sign_in)
+        binding= DataBindingUtil.setContentView(this,R.layout.activity_create_notes)
         val application = application as MyApplication
         val retrofitBuilder = application.retrofit
         val apiInterface = retrofitBuilder.create(NotesApiInterface::class.java)
         val repository= Repository(apiInterface)
         viewModel= ViewModelProvider(this, MyViewModelFactory(repository))[MyViewModel::class.java]
         with(binding){
-            btnLogin.setOnClickListener{
-                signIn()
+            btnBack.setOnClickListener {
+                finish()
             }
-
+            btnSave.setOnClickListener {
+                createNotes()
+            }
         }
-    }
-    private fun signIn(){
-        val user= User()
-        val email=binding.etEmail.text.toString()
-        val password=binding.etPassword.text.toString()
-        user.email=email
-        user.password=password
 
-        viewModel.signIn(user).observe(this@SignIn){
+
+    }
+    private fun createNotes(){
+        val response= NotesModel()
+        val title=binding.tvTitle.text.toString()
+        val description=binding.tvDescription.text.toString()
+        response.title=title
+        response.description=description
+
+        viewModel.createNotes(response).observe(this@CreateNotes){
             Log.d("Dataaa",it.toString())
             if(it.success==true){
-
-                val sharedpref=getSharedPreferences("MyPref", MODE_PRIVATE)
-                val editor=sharedpref.edit()
-                editor.putString("token",it.response?.token)
-                editor.apply()
-
-                val intent= Intent(this@SignIn, MainActivity::class.java)
+                Toast.makeText(this@CreateNotes, it.message, Toast.LENGTH_SHORT).show()
+                val intent= Intent(this@CreateNotes, MainActivity::class.java)
                 startActivity(intent)
                 finish()
+
             }else{
-                Toast.makeText(this@SignIn, it.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@CreateNotes, it.message, Toast.LENGTH_SHORT).show()
                 Log.d("Error",it.message.toString())
             }
 
 
         }
+
     }
 }

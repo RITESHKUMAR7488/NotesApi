@@ -3,8 +3,10 @@ package com.example.notesapi.viewModels
 // Importing necessary Android architecture components and custom models
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.notesapi.models.ApiResponseNotesCreateModel
 import com.example.notesapi.models.ApiResponseNotesModel
 import com.example.notesapi.models.ApiResponseSignupModel
+import com.example.notesapi.models.NotesModel
 import com.example.notesapi.models.User
 import com.example.notesapi.repositories.Repository
 
@@ -37,6 +39,21 @@ class MyViewModel(private val repository: Repository) : ViewModel() {
     fun getNotes(): MutableLiveData<ApiResponseNotesModel> {
         val data = MutableLiveData<ApiResponseNotesModel>()
         repository.getNotes(data)
+        return data
+    }
+    fun createNotes(notesModel: NotesModel): MutableLiveData<ApiResponseNotesCreateModel> {
+        val data = MutableLiveData<ApiResponseNotesCreateModel>()
+        repository.createNotes(notesModel, data)
+        return data
+    }
+    fun updateNotes(notesModel: NotesModel): MutableLiveData<ApiResponseNotesCreateModel> {
+        val data = MutableLiveData<ApiResponseNotesCreateModel>()
+        repository.updateNotes(notesModel, data)
+        return data
+    }
+    fun deleteNotes(notesId: String): MutableLiveData<ApiResponseNotesCreateModel> {
+        val data = MutableLiveData<ApiResponseNotesCreateModel>()
+        repository.deleteNotes(notesId, data)
         return data
     }
 }

@@ -4,8 +4,10 @@ package com.example.notesapi.repositories
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.notesapi.apiInterface.NotesApiInterface
+import com.example.notesapi.models.ApiResponseNotesCreateModel
 import com.example.notesapi.models.ApiResponseNotesModel
 import com.example.notesapi.models.ApiResponseSignupModel
+import com.example.notesapi.models.NotesModel
 import com.example.notesapi.models.User
 import retrofit2.Call
 import retrofit2.Callback
@@ -68,6 +70,53 @@ class Repository(private val api: NotesApiInterface) {
             override fun onFailure(p0: Call<ApiResponseNotesModel?>, p1: Throwable) {
                 Log.d("Errorss", p1.message.toString())
             }
+        })
+    }
+    fun createNotes(notesModel: NotesModel, data: MutableLiveData<ApiResponseNotesCreateModel>){
+        api.createNotes(notesModel).enqueue(object : Callback<ApiResponseNotesCreateModel?> {
+            override fun onResponse(
+                p0: Call<ApiResponseNotesCreateModel?>,
+                p1: Response<ApiResponseNotesCreateModel?>
+            ) {
+                data.value=p1.body()
+            }
+
+            override fun onFailure(p0: Call<ApiResponseNotesCreateModel?>, p1: Throwable) {
+                Log.d("Errorss", p1.message.toString())
+            }
+
+        })
+    }
+
+    fun updateNotes(notesModel: NotesModel, data: MutableLiveData<ApiResponseNotesCreateModel>){
+        api.updateNotes(notesModel).enqueue(object : Callback<ApiResponseNotesCreateModel?> {
+            override fun onResponse(
+                p0: Call<ApiResponseNotesCreateModel?>,
+                p1: Response<ApiResponseNotesCreateModel?>
+            ) {
+                data.value=p1.body()
+            }
+
+            override fun onFailure(p0: Call<ApiResponseNotesCreateModel?>, p1: Throwable) {
+                Log.d("Errorss", p1.message.toString())
+            }
+
+        })
+    }
+
+    fun deleteNotes(notesId: String, data: MutableLiveData<ApiResponseNotesCreateModel>){
+        api.deleteNotes(notesId).enqueue(object : Callback<ApiResponseNotesCreateModel?> {
+            override fun onResponse(
+                p0: Call<ApiResponseNotesCreateModel?>,
+                p1: Response<ApiResponseNotesCreateModel?>
+            ) {
+                data.value=p1.body()
+            }
+
+            override fun onFailure(p0: Call<ApiResponseNotesCreateModel?>, p1: Throwable) {
+                Log.d("Errorss", p1.message.toString())
+            }
+
         })
     }
 }

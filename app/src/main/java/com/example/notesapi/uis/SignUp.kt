@@ -20,6 +20,7 @@ import com.example.notesapi.repositories.Repository
 import com.example.notesapi.viewModelFactory.MyViewModelFactory
 import com.example.notesapi.viewModels.MyViewModel
 
+
 class SignUp : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var viewModel: MyViewModel
@@ -57,6 +58,12 @@ class SignUp : AppCompatActivity() {
             Log.d("Dataaa",it.toString())
             if(it.success==true){
                 Toast.makeText(this@SignUp, it.message, Toast.LENGTH_SHORT).show()
+
+                val sharedpref=getSharedPreferences("MyPref", MODE_PRIVATE)
+                val editor=sharedpref.edit()
+                editor.putString("token",it.response?.token)
+                editor.apply()
+
                 val intent= Intent(this@SignUp, MainActivity::class.java)
                 startActivity(intent)
                 finish()

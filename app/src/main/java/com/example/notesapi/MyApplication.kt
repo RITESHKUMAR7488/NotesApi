@@ -18,11 +18,16 @@ class MyApplication : Application() {
         val headerInterceptor = Interceptor { chain ->
             // Get the original request
             val originalRequest: Request = chain.request()
-            // Create a new request with the additional header
+
+            // Retrieve the token from SharedPreferences
+            val sharedPreferences = getSharedPreferences("MyPref", MODE_PRIVATE)
+            val token = sharedPreferences.getString("token", null) ?: ""
+
+            // Create a new request with the header
             val newRequest: Request = originalRequest.newBuilder()
                 .addHeader(
                     "Authorization",
-                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InhAeXouY29tIiwiaWQiOiI2NjRkNmI3OGE2YWZmMzZmODhkOGM5ZTYiLCJpYXQiOjE3MTg4Njk3NTV9.esKJmE0LdgHqVs6XkSumJ1ALoGbeyqrQLDNwQdKCaSg"
+                    "Bearer $token"
                 )
                 .build()
             // Proceed with the new request

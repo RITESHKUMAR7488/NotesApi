@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:padding="8dp"
         android:background="#252525"
@@ -24,15 +24,17 @@
                     android:id="@+id/tvTitle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:text="jsdfjfcjkdjkcdjkcfdfikedfjkijdf"
-                    android:textStyle="bold"
-                    android:textSize="40sp"
-                    />
+                    android:fontFamily="@font/nunito"
+                    android:text="Hi This is ritesh kumar"
+                    android:padding="10dp"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tvDescription"
-                    android:text="ksdjfioshdfikdfjkldjkoljrtgikojikg"
+                    android:text="My Name is Ritesh Kumar Mandal"
                     android:layout_width="match_parent"
+                    android:fontFamily="@font/nunito"
+                    android:padding="10dp"
                     android:layout_height="wrap_content"/>
 
 

@@ -1,5 +1,6 @@
 package com.example.notesapi
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
@@ -12,6 +13,8 @@ import com.example.notesapi.adapters.MainPageAdapter
 import com.example.notesapi.apiInterface.NotesApiInterface
 import com.example.notesapi.databinding.ActivityMainBinding
 import com.example.notesapi.repositories.Repository
+import com.example.notesapi.uis.CreateNotes
+import com.example.notesapi.uis.Description
 import com.example.notesapi.viewModelFactory.MyViewModelFactory
 import com.example.notesapi.viewModels.MyViewModel
 
@@ -33,6 +36,12 @@ class MainActivity : AppCompatActivity() {
                 val adapter= MainPageAdapter(it.response)
                 recyclerView.adapter=adapter
                 Log.d("Dataeaa",it.toString())
+
+                btnCreate.setOnClickListener{
+                    val intent= Intent(this@MainActivity,CreateNotes::class.java)
+                    startActivity(intent)
+                }
+
 
             }
 
